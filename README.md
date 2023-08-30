@@ -13,3 +13,15 @@ Sovellus sisältää erillisen frontendin ja backendin. Backendissä on REST API
 
 - Frontend tehdään React-ohjelmistokirjastolla ja JavaScriptilla. Käytämme [Vite](https://vitejs.dev/) työkalua.
 - Backend tehdään Spring Boot -ohjelmistokehyksellä ja Javalla.
+
+# Timiin Backlogit ja Sprintti 
+- Kaikki tarvittavat tiedot löytyvät Trellosta.
+- https://trello.com/w/teamwhitebacklogssprint
+
+# Tiimin jäsenet
+- Juuso Hakala
+- Leo Ahopalo
+- Jouni Kaitasalo
+- Guan Ruichao
+- Topias Naskali
+- Oliver Roman

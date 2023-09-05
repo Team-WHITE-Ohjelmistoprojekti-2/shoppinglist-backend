@@ -22,6 +22,6 @@ Sovellus sisältää erillisen frontendin ja backendin. Backendissä on REST API
 - Juuso Hakala
 - Leo Ahopalo
 - Jouni Kaitasalo
-- Guan Ruichao
+- Ruichao Guan
 - Topias Naskali
 - Oliver Roman

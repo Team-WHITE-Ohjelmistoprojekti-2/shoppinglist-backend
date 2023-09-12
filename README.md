@@ -1,1 +1,5 @@
-Testing discord plugin 123
+- Product class works
+- Working templates
+- Deleting function for products working
+- Adding function for products working
+- Edit (ONGOING)

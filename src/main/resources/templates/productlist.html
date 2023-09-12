@@ -11,7 +11,7 @@
 			<h1>All Products so far</h1>
 		</div>
 	
-		<div class="col-md-4" style="padding:50px 0"></div>
+		<div class="col-md-4" style="padding:40px 0"></div>
         </div>
 			<table class="table table-striped">
 			<thead>
@@ -30,8 +30,8 @@
 					<td th:text="${product.getDetails()}"></td>
                     <td th:text="${product.getPrice()}+€"></td>
 					<td th:text="${product.getQuantity()}"></td>
-					<td><a th:href="@{/deleteproduct/{id}(id=${product.id})}" class="btn btn-xs btn-danger" style="width: 65px; height: 20px;">Delete</a></td>
-					<td><a th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-xs btn-primary" style="width: 65px; height: 20px; margin-bottom: 3%">Edit</a></td>
+					<td><a th:href="@{/deleteproduct/{id}(id=${product.id})}" class="btn btn-xs btn-danger" style="width: 75px; height: 20px;">Delete</a></td>
+					<td><a th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-xs btn-primary" style="width: 75px; height: 20px;">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>

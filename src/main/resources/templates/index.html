@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	th:href="@{/css/bootstrap.min.css}" />
+<title>Welcome to The mainpage test in the future here will have shoppinglist (hopefully)</title>
+</head>
+<body class="bg-warning" >
+	<h1 class="text-center">Shoppinglist</h1>
+
+	<div
+		style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 10px;">
+		<button onclick="location.href='/productlist'" class="btn btn-success"
+			style="width: 130px; height: 50px">shoppinglist</button>
+	</div>
+	<div style="display: flex; justify-content: center;">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-danger" />
+		</form>
+	</div>
+</body>
+</html>

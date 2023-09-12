@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>ProductList</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="bg-warning">
+    	<h1>Add a product</h1>
+		<form th:object="${product}" th:action="@{save}" action="#" method="post">
+		  	<label for="name">Name</label>
+			<input type="text" id="name" th:field="*{name}" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+			<div style="clear: both; display: block; height: 10px;"></div>
+		  	<label for="details">details</label>
+			<input type="text" id="details" th:field="*{details}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<label for="price">Price</label>
+			<input type="text" id="price" th:field="*{price}" />
+			<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
+            <label for="quantity">quantity</label>
+			<input type="int" id="quantity" th:field="*{quantity}" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="submit" class="btn btn-success" value="Save" style="width: 120px;height: 40px;"></input>
+		</form>
+		<button onclick="location.href='/productlist'" class="btn btn-danger" style="width: 120px;height: 40px;">Cancel</button>
+	</div>
+</body>
+</html>

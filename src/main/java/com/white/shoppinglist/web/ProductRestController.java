@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 public class ProductRestController {
@@ -38,4 +41,25 @@ public class ProductRestController {
 		
 		return new ResponseEntity<>(product, status);
 	}
+
+    // post mapping, creates new product. SHOULD WORK
+    @PostMapping("/addproduct")
+public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    Product createdProduct = productRepository.save(product);
+    return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+}
+
+ // delete mapping, deletes product by id returns errorcode if product is not found.
+@DeleteMapping("/deleteproduct/{id}")
+public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long productId) {
+    Optional<Product> product = productRepository.findById(productId);
+    
+    if (product.isPresent()) {
+        productRepository.deleteById(productId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}
+
 }

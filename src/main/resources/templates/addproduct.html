@@ -21,7 +21,7 @@
 			<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
 			<div style="clear: both; display: block; height: 5px;"></div>
             <label for="quantity">quantity</label>
-			<input type="int" id="quantity" th:field="*{quantity}" />
+			<input type="number" id="quantity" th:field="*{quantity}" />
 			<div style="clear: both; display: block; height: 10px;"></div>
 			<input type="submit" class="btn btn-success" value="Save" style="width: 120px;height: 40px;"></input>
 			<div style="clear: both; display: block; height: 5px;"></div>

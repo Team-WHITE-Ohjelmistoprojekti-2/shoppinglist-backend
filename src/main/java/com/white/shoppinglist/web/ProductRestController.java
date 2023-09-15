@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5174/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class ProductRestController {
     
     //private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);

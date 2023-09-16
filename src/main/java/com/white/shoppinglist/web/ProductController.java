@@ -40,7 +40,7 @@ public class ProductController {
 		return "addProduct";
 	}
 
-	@GetMapping("/deleteproduct/{id}")
+	@RequestMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable("id") Long productId) {
 		productRepository.deleteById(productId);
 		log.info("The product has been succesfully deleted");

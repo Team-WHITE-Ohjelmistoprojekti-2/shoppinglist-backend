@@ -73,7 +73,8 @@ public class ProductRestController {
 
     // delete mapping, deletes product by id returns errorcode if product is not
     // found.
-    @DeleteMapping("/deleteproduct/{id}")
+    @DeleteMapping("/product/{id}")
+    @CrossOrigin(origins = "http://localhost:5173")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long productId) {
         Optional<Product> product = productRepository.findById(productId);
 

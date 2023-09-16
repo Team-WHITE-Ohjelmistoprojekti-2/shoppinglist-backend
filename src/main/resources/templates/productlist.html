@@ -30,7 +30,7 @@
 					<td th:text="${product.getDetails()}"></td>
                     <td th:text="${product.getPrice()}+€"></td>
 					<td th:text="${product.getQuantity()}"></td>
-					<td><a th:href="@{/deleteproduct/{id}(id=${product.id})}" class="btn btn-xs btn-danger" style="width: 75px; height: 20px;">Delete</a></td>
+					<td><a th:href="@{/delete/{id}(id=${product.id})}" class="btn btn-xs btn-danger" style="width: 75px; height: 20px;">Delete</a></td>
 					<td><a th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-xs btn-primary" style="width: 75px; height: 20px;">Edit</a></td>
 				</tr>
 			</tbody>

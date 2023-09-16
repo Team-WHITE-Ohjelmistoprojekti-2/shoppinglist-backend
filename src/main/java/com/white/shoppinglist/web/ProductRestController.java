@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,8 +25,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "http://localhost:5173/")
 @RequestMapping("/api")
 public class ProductRestController {
-    
-    //private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);
+
+    // private static final Logger log =
+    // LoggerFactory.getLogger(ProductRestController.class);
     @Autowired
     private ProductRepository productRepository;
 
@@ -54,6 +56,19 @@ public class ProductRestController {
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productRepository.save(product);
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    }
+
+    // put mapping
+    @PutMapping("/products/{id}")
+    Product updateProduct(@RequestBody Product newProduct, @PathVariable Long id) {
+        return productRepository.findById(id)
+                .map(product -> {
+                    product.setName(newProduct.getName());
+                    product.setQuantity(newProduct.getQuantity());
+                    product.setPrice(newProduct.getPrice());
+                    product.setDetails(newProduct.getDetails());
+                    return productRepository.save(product);
+                }).orElseThrow();
     }
 
     // delete mapping, deletes product by id returns errorcode if product is not

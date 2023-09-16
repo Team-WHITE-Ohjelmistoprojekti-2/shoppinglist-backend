@@ -1,4 +1,5 @@
 package com.white.shoppinglist.web;
+
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,49 +18,48 @@ import com.white.shoppinglist.domain.ProductRepository;
 
 @Controller
 public class ProductController {
-    
-    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
-    @Autowired
+	private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+
+	@Autowired
 	private ProductRepository productRepository;
 
-
-    @GetMapping({ "/", "/productlist" })
+	@GetMapping({ "/", "/productlist" })
 	public String productlist(Model model) {
 		List<Product> products;
 		products = (List<Product>) productRepository.findAll();
 		model.addAttribute("products", products);
-        log.info("Showing all products");
+		log.info("Showing all products");
 		return "productlist";
 	}
 
-    @RequestMapping(value = "/add")
+	@RequestMapping(value = "/add")
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
-        log.info("Adding a new product");
+		log.info("Adding a new product");
 		return "addProduct";
 	}
 
-    @GetMapping("/deleteproduct/{id}")
+	@GetMapping("/deleteproduct/{id}")
 	public String deleteProduct(@PathVariable("id") Long productId) {
 		productRepository.deleteById(productId);
-        log.info("The product has been succesfully deleted");
+		log.info("The product has been succesfully deleted");
 		return "redirect:/productlist";
 	}
 
-    @RequestMapping(value = "/edit/{id}")
+	@RequestMapping(value = "/edit/{id}")
 	public String editProduct(@PathVariable("id") Long productId, Model model) {
 		model.addAttribute("product", productRepository.findById(productId));
-        log.info("The product has been succesfully edited");
-        return "editproduct";
-}
+		log.info("The product has been succesfully edited");
+		return "editproduct";
+	}
 
-//SAVESSA häikkää (illalla katottu väsynyt)
-@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveProduct( @ModelAttribute("product") Product product,
+	// SAVESSA (ei enää häikkää :^) )
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveProduct(@ModelAttribute("product") Product product,
 			Model model) {
 		productRepository.save(product);
-		return "redirect:productlist";
+		return "redirect:/productlist";
 	}
 
 }

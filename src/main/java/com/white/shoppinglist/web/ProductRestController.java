@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
+@RequestMapping("/api")
 public class ProductRestController {
     
     //private static final Logger log = LoggerFactory.getLogger(ProductRestController.class);
@@ -39,13 +41,12 @@ public class ProductRestController {
     @GetMapping("/products/{id}")
     public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") Long productId) {
         Optional<Product> product = productRepository.findById(productId);
-        HttpStatusCode status = HttpStatus.NOT_FOUND;
 
         if (product.isPresent()) {
-            status = HttpStatus.OK;
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        return new ResponseEntity<>(product, status);
     }
 
     // post mapping, creates new product. SHOULD WORK

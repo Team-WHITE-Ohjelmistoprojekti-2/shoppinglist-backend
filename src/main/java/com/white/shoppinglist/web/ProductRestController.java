@@ -3,11 +3,14 @@ package com.white.shoppinglist.web;
 import java.util.List;
 import java.util.Optional;
 import com.white.shoppinglist.domain.Product;
+import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
+import com.white.shoppinglist.domain.ShoppingListRepository;
 
 //import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,9 @@ public class ProductRestController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ShoppingListRepository shoppingListRepository;
+
     // Get all products.
     @GetMapping("/products")
     public List<Product> getAllProducts() {
@@ -49,6 +55,20 @@ public class ProductRestController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Gets all products for a shopping list by shopping list id
+    @GetMapping("/products/list/{id}")
+    public ResponseEntity<List<Product>> getShoppinglistProducts(@PathVariable("id") Long shoppingListId) {
+        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(shoppingListId);
+
+        // if shopping list doesn't exist
+        if (shoppingList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        List<Product> products = productRepository.findByShoppingList(shoppingList.get());
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // post mapping, creates new product.

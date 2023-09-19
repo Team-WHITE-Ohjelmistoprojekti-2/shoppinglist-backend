@@ -44,8 +44,6 @@ public class ShoppinglistApplication {
 			productRepository.save(product2);
 			Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
 			productRepository.save(product3);
-
-			logger.debug(shoppingList.toString());
 			
 		};
 	}

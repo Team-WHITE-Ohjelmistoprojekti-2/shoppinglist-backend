@@ -37,6 +37,9 @@ public class ShoppinglistApplication {
 			ShoppingList shoppingList = new ShoppingList("testi lista");
 			shoppinglistRepository.save(shoppingList);
 
+			ShoppingList shoppingList2 = new ShoppingList("testi 3214124124");
+			shoppinglistRepository.save(shoppingList2);
+
 			// Products
 			Product product1 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
 			productRepository.save(product1);
@@ -44,6 +47,8 @@ public class ShoppinglistApplication {
 			productRepository.save(product2);
 			Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
 			productRepository.save(product3);
+			Product product4 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
+			productRepository.save(product4);
 			
 		};
 	}

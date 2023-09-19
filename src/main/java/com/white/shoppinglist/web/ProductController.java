@@ -54,7 +54,7 @@ public class ProductController {
 		return "editproduct";
 	}
 
-	// SAVESSA (ei enää häikkää :^) )
+	// SAVESSA (ei enää häikkää :^) ) (hyvä!)
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute("product") Product product,
 			Model model) {

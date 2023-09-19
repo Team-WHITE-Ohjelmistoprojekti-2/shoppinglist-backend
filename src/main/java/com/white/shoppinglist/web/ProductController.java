@@ -33,7 +33,7 @@ public class ProductController {
 		return "productlist";
 	}
 
-	@RequestMapping(value = "/add")
+	@RequestMapping(value = "/addproduct")
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
 		log.info("Adding a new product");

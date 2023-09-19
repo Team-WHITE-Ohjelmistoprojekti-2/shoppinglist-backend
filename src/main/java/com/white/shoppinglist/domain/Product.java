@@ -1,16 +1,10 @@
 package com.white.shoppinglist.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -22,17 +16,17 @@ public class Product {
     private String name, details;
     private double price;
     private int quantity;
+    
+    @ManyToOne
+    @JoinColumn(name = "shopping_list_id")
+    private ShoppingList shoppingList;
 
-     @ManyToMany(mappedBy = "products")
-     @JsonIgnoreProperties("products") // added this to fix recursion if happens
-    private Set<ShoppingList> shoppingLists = new HashSet<>();
-
-    public Product(String name, String details, double price, int quantity) {
-
+    public Product(String name, String details, double price, int quantity, ShoppingList shoppingList) {
         this.name = name;
         this.details = details;
         this.price = price;
         this.quantity = quantity;
+        this.shoppingList = shoppingList;
     }
 
     public Product() {
@@ -79,4 +73,11 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public ShoppingList getShoppingList() {
+        return shoppingList;
+    }
+
+    public void setShoppingList(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
+    }
 }

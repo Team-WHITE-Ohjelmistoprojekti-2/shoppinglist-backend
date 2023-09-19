@@ -1,15 +1,16 @@
 package com.white.shoppinglist.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 
 @Entity
 public class ShoppingList {
@@ -18,17 +19,12 @@ public class ShoppingList {
     private Long id;
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-        name = "shoppinglist_product",
-        joinColumns = @JoinColumn(name = "shoppinglist_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> products = new HashSet<>();
+    @OneToMany(mappedBy = "shoppingList", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Product> products;
 
-    public ShoppingList(String name, Set<Product> products) {
+    public ShoppingList(String name) {
         this.name = name;
-        this.products = products;
     }
 
     public ShoppingList() {
@@ -50,14 +46,16 @@ public class ShoppingList {
         this.name = name;
     }
 
-    public Set<Product> getProducts() {
-        if (products == null) {
-            products = new HashSet<>();
-        }
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingList [id=" + id + ", name=" + name + ", products=" + products + "]";
     }
 }

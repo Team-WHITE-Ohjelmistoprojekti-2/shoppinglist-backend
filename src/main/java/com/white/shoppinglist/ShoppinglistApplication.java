@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +24,8 @@ import com.white.shoppinglist.domain.ProductRepository;
 @SpringBootApplication
 public class ShoppinglistApplication {
 
+	private static final Logger logger = LoggerFactory.getLogger(ShoppinglistApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(ShoppinglistApplication.class, args);
 	}
@@ -29,24 +33,20 @@ public class ShoppinglistApplication {
 	@Bean
 	public CommandLineRunner demodata(ProductRepository productRepository, ShoppingListRepository shoppinglistRepository) {
 		return (args) -> {
+			// ShoppingList
+			ShoppingList shoppingList = new ShoppingList("testi lista");
+			shoppinglistRepository.save(shoppingList);
 
 			// Products
-			Product product1 = new Product("Peruna", "kova peruna", 0.79, 1);
+			Product product1 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
 			productRepository.save(product1);
-			Product product2 = new Product("maitojauhe", "Tarvitsen", 2.79, 4);
+			Product product2 = new Product("maitojauhe", "Tarvitsen", 2.79, 4, shoppingList);
 			productRepository.save(product2);
-			Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6);
+			Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
 			productRepository.save(product3);
 
-			// Shoppinglist testing
-			Set<Product> productsToAddToShoppingList = new HashSet<>();
-			productsToAddToShoppingList.add(product1);
-			productsToAddToShoppingList.add(product2);
-			productsToAddToShoppingList.add(product3);
-
-			ShoppingList shoppinglist1 = new ShoppingList("Shoppinglist1", productsToAddToShoppingList);
-        	shoppinglistRepository.save(shoppinglist1);
-
+			logger.debug(shoppingList.toString());
+			
 		};
 	}
 

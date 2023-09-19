@@ -51,7 +51,6 @@ public class ShoppinglistApplication {
 	}
 
 	@Bean
-
 	public CorsConfigurationSource corsConfigurationSource() {
 
 		CorsConfiguration configuration = new CorsConfiguration();

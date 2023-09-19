@@ -51,7 +51,7 @@ public class ProductRestController {
         }
     }
 
-    // post mapping, creates new product. SHOULD WORK
+    // post mapping, creates new product.
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productRepository.save(product);

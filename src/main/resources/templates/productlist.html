@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<title>ProductList</title>
+</head>
+<body class="bg-warning">
+    <div class="container">
+		<div class="col-md-4 text-center">
+			<h1>All Products so far</h1>
+		</div>
+	
+		<div class="col-md-4" style="padding:40px 0"></div>
+        </div>
+			<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Details</th>
+					<th>Price</th>
+					<th>Quantity</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="product : ${products}">
+					<td th:text="${product.getName()}"></td>
+					<td th:text="${product.getDetails()}"></td>
+                    <td th:text="${product.getPrice()}+€"></td>
+					<td th:text="${product.getQuantity()}"></td>
+					<td><a th:href="@{/delete/{id}(id=${product.id})}" class="btn btn-xs btn-danger" style="width: 75px; height: 20px;">Delete</a></td>
+					<td><a th:href="@{/edit/{id}(id=${product.id})}" class="btn btn-xs btn-primary" style="width: 75px; height: 20px;">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+        <button onclick="location.href='/add'" class="btn btn-sm btn-success" style="width: 120px; height: 30px;">Add a product</button>
+	</div>
+</body>
+</html>

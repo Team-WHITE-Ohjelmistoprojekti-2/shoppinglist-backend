@@ -7,12 +7,8 @@ import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 
-//import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -37,12 +34,26 @@ public class ProductRestController {
     @Autowired
     private ShoppingListRepository shoppingListRepository;
 
-    // Get all products.
+    // This gets all products if no query parameters were passed.
+    // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        List<Product> products = (List<Product>) productRepository.findAll();
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(value = "shoppinglist", required = false) Long shoppingListId) {
+        // shoppinglist id was passed in query parameter
+        if (shoppingListId != null) {
+            Optional<ShoppingList> shoppingList = shoppingListRepository.findById(shoppingListId);
 
-        return products;
+            // shopping list doesn't exist
+            if (shoppingList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            List<Product> products = productRepository.findByShoppingList(shoppingList.get());
+            return new ResponseEntity<>(products, HttpStatus.OK);
+        }
+
+        List<Product> products = (List<Product>) productRepository.findAll();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // Get product by id.
@@ -55,20 +66,6 @@ public class ProductRestController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    // Gets all products for a shopping list by shopping list id
-    @GetMapping("/products/list/{id}")
-    public ResponseEntity<List<Product>> getShoppinglistProducts(@PathVariable("id") Long shoppingListId) {
-        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(shoppingListId);
-
-        // if shopping list doesn't exist
-        if (shoppingList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        List<Product> products = productRepository.findByShoppingList(shoppingList.get());
-        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     // post mapping, creates new product.

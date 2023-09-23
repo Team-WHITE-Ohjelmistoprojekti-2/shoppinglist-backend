@@ -21,7 +21,6 @@ public class Product {
     
     @ManyToOne
     @JoinColumn(name = "shopping_list_id")
-    @JsonIgnore
     private ShoppingList shoppingList;
 
     public Product(String name, String details, double price, int quantity, ShoppingList shoppingList) {

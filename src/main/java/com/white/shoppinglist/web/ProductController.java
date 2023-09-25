@@ -37,7 +37,7 @@ public class ProductController {
 	public String addProduct(Model model) {
 		model.addAttribute("product", new Product());
 		log.info("Adding a new product");
-		return "addProduct";
+		return "addproduct";
 	}
 
 	@RequestMapping("/delete/{id}")

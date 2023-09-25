@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.white.shoppinglist.domain.ShoppingListRepository;
@@ -28,18 +27,11 @@ public class ShoppinglistRepositoryTests {
 
     @Test
     public void findByProductNameShouldReturnProduct() {
-<<<<<<< HEAD
+
     List<Product> products = productrepository.findByName("Peruna");
     assertThat(products).hasSize(1);
     assertThat(products.get(0).getName()).isEqualTo("Peruna");
-}
-=======
-        List<Product> products = productrepository.findByName("Milk");
-        assertThat(products).hasSize(1);
-        assertThat(products.get(0).getName()).isEqualTo("Milk");
-    }
->>>>>>> 3d05f37e43e2001ae9a4947b178476578c63ee6c
-
+}  
     @Test
     public void createShoppingList() {
     ShoppingList shoppinglist = new ShoppingList("Ostoslista");

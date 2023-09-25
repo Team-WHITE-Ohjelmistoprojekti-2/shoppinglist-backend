@@ -28,10 +28,17 @@ public class ShoppinglistRepositoryTests {
 
     @Test
     public void findByProductNameShouldReturnProduct() {
+<<<<<<< HEAD
     List<Product> products = productrepository.findByName("Peruna");
     assertThat(products).hasSize(1);
     assertThat(products.get(0).getName()).isEqualTo("Peruna");
 }
+=======
+        List<Product> products = productrepository.findByName("Milk");
+        assertThat(products).hasSize(1);
+        assertThat(products.get(0).getName()).isEqualTo("Milk");
+    }
+>>>>>>> 3d05f37e43e2001ae9a4947b178476578c63ee6c
 
     @Test
     public void createShoppingList() {

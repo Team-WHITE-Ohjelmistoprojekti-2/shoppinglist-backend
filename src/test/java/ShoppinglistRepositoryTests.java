@@ -27,7 +27,7 @@ public class ShoppinglistRepositoryTests {
 
     @Test
     public void findByProductNameShouldReturnProduct() {
-        List<Product> products = productrepository.findByProductName("Milk");
+        List<Product> products = productrepository.findByName("Milk");
         assertThat(products).hasSize(1);
         assertThat(products.get(0).getName()).isEqualTo("Milk");
     }

@@ -7,6 +7,6 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     //testi luokkiin 
     List<Product> findByShoppingList(ShoppingList shoppingList);
-    List<Product> findByProductName(String name);
+    List<Product> findByName(String name);
     List<Product> findByShoppingListName(String name);
 }

@@ -32,7 +32,7 @@ public class Product {
     }
 
     public Product() {
-
+        this.quantity = 1;
     }
 
     public Long getId() {

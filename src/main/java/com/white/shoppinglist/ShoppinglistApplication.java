@@ -33,25 +33,31 @@ public class ShoppinglistApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demodata(ProductRepository productRepository, ShoppingListRepository shoppinglistRepository) {
+	public CommandLineRunner demodata(ProductRepository productRepository,
+			ShoppingListRepository shoppinglistRepository) {
 		return (args) -> {
-			// ShoppingList
-			ShoppingList shoppingList = new ShoppingList("testi lista");
-			shoppinglistRepository.save(shoppingList);
+			long existingShoppingListCount = shoppinglistRepository.count();
 
-			ShoppingList shoppingList2 = new ShoppingList("testi 3214124124");
-			shoppinglistRepository.save(shoppingList2);
+			if (existingShoppingListCount == 0) {
+				// Luodaan demodata vain, jos tietokannassa ei ole vielä ShoppingListeja
+				ShoppingList shoppingList = new ShoppingList("testi lista");
+				shoppinglistRepository.save(shoppingList);
 
-			// Products
-			Product product1 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
-			productRepository.save(product1);
-			Product product2 = new Product("maitojauhe", "Tarvitsen", 2.79, 4, shoppingList);
-			productRepository.save(product2);
-			Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
-			productRepository.save(product3);
-			Product product4 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
-			productRepository.save(product4);
-			
+				ShoppingList shoppingList2 = new ShoppingList("testi 3214124124");
+				shoppinglistRepository.save(shoppingList2);
+
+				Product product1 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
+				productRepository.save(product1);
+				Product product2 = new Product("maitojauhe", "Tarvitsen", 2.79, 4, shoppingList);
+				productRepository.save(product2);
+				Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
+				productRepository.save(product3);
+				Product product4 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
+				productRepository.save(product4);
+			} else {
+				// Tietokannassa on jo dataa, joten ei lisätä demodataa
+				System.out.println("Tietokannassa on jo dataa, joten demodataa ei lisätä.");
+			}
 		};
 	}
 
@@ -63,10 +69,10 @@ public class ShoppinglistApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-					.allowedOrigins("http://localhost:5173")  // frontendin osoite
-					.allowedMethods("GET", "POST", "PUT", "DELETE")
-					.allowedHeaders("Content-Type")
-					.allowCredentials(false);
+						.allowedOrigins("http://localhost:5173") // frontendin osoite
+						.allowedMethods("GET", "POST", "PUT", "DELETE")
+						.allowedHeaders("Content-Type")
+						.allowCredentials(false);
 			}
 		};
 	}

@@ -39,7 +39,7 @@ public class ShoppinglistApplication {
 			long existingShoppingListCount = shoppinglistRepository.count();
 
 			if (existingShoppingListCount == 0) {
-				// Luodaan demodata vain, jos tietokannassa ei ole vielä ShoppingListeja
+				// Create demo data only if there are no Shopping Lists in the database yet
 				ShoppingList shoppingList = new ShoppingList("testi lista");
 				shoppinglistRepository.save(shoppingList);
 
@@ -55,8 +55,8 @@ public class ShoppinglistApplication {
 				Product product4 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
 				productRepository.save(product4);
 			} else {
-				// Tietokannassa on jo dataa, joten ei lisätä demodataa
-				System.out.println("Tietokannassa on jo dataa, joten demodataa ei lisätä.");
+				// There is already data in the database, so do not add demo data
+				System.out.println("There is already data in the database, so demo data will not be added.");
 			}
 		};
 	}

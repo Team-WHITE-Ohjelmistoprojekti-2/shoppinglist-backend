@@ -4,6 +4,7 @@
     <title>ProductList</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<script defer src="/scripts/main.js"></script>
 </head>
 <body>
 <div class="bg-warning">
@@ -28,17 +29,5 @@
     </form>
     <button onclick="location.href='/productlist'" class="btn btn-danger" style="width: 120px;height: 40px;">Cancel</button>
 </div>
-<script>
-    function validateForm() {
-        var priceInput = document.getElementById("price");
-        var priceValue = priceInput.value;
-
-        if (priceValue === null || priceValue === "") {
-            return confirm("The price is null. Are you sure you want to continue?");
-        }
-
-        return true;
-    }
-</script>
 </body>
 </html>

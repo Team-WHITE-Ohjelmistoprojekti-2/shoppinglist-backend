@@ -29,7 +29,7 @@
 				<tr th:each="product : ${products}">
 					<td th:text="${product.getName()}"></td>
 					<td th:text="${product.getDetails()}"></td>
-                    <td th:text="${product.getPrice()}+€"></td>
+                    <td th:text="${product.price != null ? product.price + '€' : 'N/A'}"></td>
 					<td th:text="${product.getQuantity()}"></td>
 					<td><a th:href="@{/delete/{id}(id=${product.id})}" th:data-confirm-delete="|Deleting product '${product.getName()}'|"
 						onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false" class="btn btn-xs btn-danger" style="width: 75px; height: 20px;">Delete</a></td>

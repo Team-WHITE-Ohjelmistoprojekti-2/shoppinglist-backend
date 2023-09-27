@@ -1,5 +1,4 @@
 package com.white.shoppinglist.domain;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -8,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Product {
@@ -15,18 +16,25 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name, details;
-    private double price;
-    private int quantity;
+    private String name;
+    private String details;
+    
+    // some validation to ensure price can be null
+   @PositiveOrZero
+    private Double price = 0.0; 
+    
+    // Add validation to ensure that the value cannot be negative
+    @NotNull
+    private int quantity = 1; // Default to 1 if not provided
     
     @ManyToOne
     @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;
 
-    public Product(String name, String details, double price, int quantity, ShoppingList shoppingList) {
+    public Product(String name, String details, Double price, int quantity, ShoppingList shoppingList) {
         this.name = name;
         this.details = details;
-        this.price = price;
+        this.price = (price != null) ? price : 0.0;
         this.quantity = quantity;
         this.shoppingList = shoppingList;
     }

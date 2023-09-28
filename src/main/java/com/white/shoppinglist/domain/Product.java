@@ -19,9 +19,10 @@ public class Product {
     private String name;
     private String details;
     
-    // some validation to ensure price can be null MIGHT NEED EXTRA WORK the 0.0 gives some failures with null 
-   @PositiveOrZero
-    private Double price = 0.0; 
+    // some validation to ensure price can be null MIGHT NEED EXTRA WORK the 0.0 gives some failures with null
+    @NotNull 
+    @PositiveOrZero
+    private Double price = 0.0;
     
     // Add validation to ensure that the value cannot be negative
     @NotNull
@@ -34,7 +35,7 @@ public class Product {
     public Product(String name, String details, Double price, int quantity, ShoppingList shoppingList) {
         this.name = name;
         this.details = details;
-        this.price = (price != null) ? price : 0.0;
+        this.price = price;
         this.quantity = quantity;
         this.shoppingList = shoppingList;
     }
@@ -67,11 +68,11 @@ public class Product {
         this.details = details;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

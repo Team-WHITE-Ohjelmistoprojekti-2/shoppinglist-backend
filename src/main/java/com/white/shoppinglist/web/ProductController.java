@@ -56,8 +56,7 @@ public class ProductController {
 
 	// SAVESSA (ei enää häikkää :^) ) (hyvä!)
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("product") Product product,
-			Model model) {
+	public String saveProduct(@ModelAttribute("product") Product product, Model model) {
 		productRepository.save(product);
 		return "redirect:/productlist";
 	}

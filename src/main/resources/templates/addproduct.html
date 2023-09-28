@@ -7,27 +7,28 @@
 	<script defer src="/scripts/main.js"></script>
 </head>
 <body>
-<div class="bg-warning">
-    <h1>Add a product</h1>
-    <form th:object="${product}" th:action="@{save}" action="#" method="post" onsubmit="return validateForm()">
-        <label for="name">Name</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <label for="details">Details</label>
-        <input type="text" id="details" th:field="*{details}" />
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <label for="price">Price</label>
-		<input type="text" id="price" th:value="${product.price}" />
-        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
-        <div style="clear: both; display: block; height: 5px;"></div>
-        <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" th:field="*{quantity}" />
-        <div style="clear: both; display: block; height: 10px;"></div>
-        <input type="submit" class="btn btn-success" value="Save" style="width: 120px;height: 40px;"></input>
-        <div style="clear: both; display: block; height: 5px;"></div>
-    </form>
-    <button onclick="location.href='/productlist'" class="btn btn-danger" style="width: 120px;height: 40px;">Cancel</button>
-</div>
-</body>
-</html>
+    <div class="bg-warning">
+        <h1>Add a product</h1>
+        <form th:object="${product}" th:action="@{save}" action="#" method="post" onsubmit="return validateForm()">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" />
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <label for="details">Details</label>
+            <input type="text" id="details" th:field="*{details}" />
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <label for="price">Price</label>
+            <input type="text" id="price" th:field="*{price}" th:value="${product.price != null ? (product.price != 0.0 ? product.price : 'NULL') : 'NULL'}" />
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
+            <div style="clear: both; display: block; height: 5px;"></div>
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" th:field="*{quantity}" />
+            <div style="clear: both; display: block; height: 10px;"></div>
+            <input type="submit" class="btn btn-success" value="Save" style="width: 120px;height: 40px;"></input>
+            <div style="clear: both; display: block; height: 5px;"></div>
+        </form>
+        <button onclick="location.href='/productlist'" class="btn btn-danger" style="width: 120px;height: 40px;">Cancel</button>
+    </div>
+   
+    </body>
+    </html>

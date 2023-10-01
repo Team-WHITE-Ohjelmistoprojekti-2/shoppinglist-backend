@@ -28,6 +28,7 @@ public class Product {
     @NotNull
     private int quantity = 1; // Default to 1 if not provided
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;

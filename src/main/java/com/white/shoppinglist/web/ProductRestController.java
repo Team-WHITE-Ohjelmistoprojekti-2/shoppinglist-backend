@@ -2,14 +2,19 @@ package com.white.shoppinglist.web;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.white.shoppinglist.EntityMapper;
 import com.white.shoppinglist.domain.Product;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
 import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.web.ProductDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +36,9 @@ public class ProductRestController {
 
     @Autowired
     private ShoppingListRepository shoppingListRepository;
+
+    @Autowired
+    private EntityMapper mapper;
 
     // This gets all products if no query parameters were passed.
     // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
@@ -66,11 +74,27 @@ public class ProductRestController {
         }
     }
 
-    // post mapping, creates new product.
+    // Post mapping, creates new product.
+    // Uses data transfer object to transfer the shoppinglist id of product.
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+        ShoppingList shoppingList = shoppingListRepository
+            .findById(productDTO.getShoppinglistId())
+            .orElse(null);
+
+        if (shoppingList == null) {
+            return new ResponseEntity<ProductDTO>(HttpStatus.BAD_REQUEST);
+        }
+
+        Product product = new Product(
+            productDTO.getName(),
+            productDTO.getDetails(),
+            productDTO.getPrice(),
+            productDTO.getQuantity(),
+            shoppingList);
+
         Product createdProduct = productRepository.save(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.toDto(createdProduct), HttpStatus.CREATED);
     }
 
     // put mapping
@@ -99,5 +123,4 @@ public class ProductRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 }

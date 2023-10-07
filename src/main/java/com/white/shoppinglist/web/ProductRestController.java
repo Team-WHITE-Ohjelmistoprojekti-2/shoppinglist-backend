@@ -2,19 +2,17 @@ package com.white.shoppinglist.web;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.white.shoppinglist.EntityMapper;
 import com.white.shoppinglist.domain.Product;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
 import com.white.shoppinglist.domain.ShoppingListRepository;
-import com.white.shoppinglist.web.ProductDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RestController
 @RequestMapping("/api")
 public class ProductRestController {
-
-    // private static final Logger log =
-    // LoggerFactory.getLogger(ProductRestController.class);
     @Autowired
     private ProductRepository productRepository;
 
@@ -43,7 +38,7 @@ public class ProductRestController {
     // This gets all products if no query parameters were passed.
     // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<List<ProductDTO>> getProducts(
             @RequestParam(value = "shoppinglist", required = false) Long shoppingListId) {
         // shoppinglist id was passed in query parameter
         if (shoppingListId != null) {
@@ -54,21 +49,31 @@ public class ProductRestController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
-            List<Product> products = productRepository.findByShoppingList(shoppingList.get());
+            List<ProductDTO> products = productRepository
+                .findByShoppingList(shoppingList.get())
+                .stream()
+                .map(product -> mapper.toDto(product))
+                .collect(Collectors.toList());
+
             return new ResponseEntity<>(products, HttpStatus.OK);
         }
 
         List<Product> products = (List<Product>) productRepository.findAll();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+        List<ProductDTO> productDTOs = products
+            .stream()
+            .map(product -> mapper.toDto(product))
+            .collect(Collectors.toList());
+
+        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 
     // Get product by id.
     @GetMapping("/products/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") Long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable("id") Long id) {
+        Optional<Product> product = productRepository.findById(id);
 
         if (product.isPresent()) {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toDto(product.get()), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -78,10 +83,15 @@ public class ProductRestController {
     // Uses data transfer object to transfer the shoppinglist id of product.
     @PostMapping("/products")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        ShoppingList shoppingList = shoppingListRepository
-            .findById(productDTO.getShoppinglistId())
-            .orElse(null);
+        // Product must belong to shoppinglist
+        Long shoppinglistId = productDTO.getShoppinglistId();
+        if (shoppinglistId == null) {
+            return new ResponseEntity<ProductDTO>(HttpStatus.BAD_REQUEST);
+        }
 
+        ShoppingList shoppingList = shoppingListRepository
+            .findById(shoppinglistId)
+            .orElse(null);
         if (shoppingList == null) {
             return new ResponseEntity<ProductDTO>(HttpStatus.BAD_REQUEST);
         }
@@ -97,17 +107,21 @@ public class ProductRestController {
         return new ResponseEntity<>(mapper.toDto(createdProduct), HttpStatus.CREATED);
     }
 
-    // put mapping
+    // Put mapping, updates existing product.
     @PutMapping("/products/{id}")
-    Product updateProduct(@RequestBody Product newProduct, @PathVariable Long id) {
-        return productRepository.findById(id)
-                .map(product -> {
-                    product.setName(newProduct.getName());
-                    product.setQuantity(newProduct.getQuantity());
-                    product.setPrice(newProduct.getPrice());
-                    product.setDetails(newProduct.getDetails());
-                    return productRepository.save(product);
-                }).orElseThrow();
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductDTO newProduct, @PathVariable Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        product.setName(newProduct.getName());
+        product.setQuantity(newProduct.getQuantity());
+        product.setPrice(newProduct.getPrice());
+        product.setDetails(newProduct.getDetails());
+        productRepository.save(product);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // delete mapping, deletes product by id returns errorcode if product is not

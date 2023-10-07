@@ -1,13 +1,13 @@
-- Product class works
-- Working templates
-- Deleting function for products working
-- Adding function for products working
-- Edit (ONGOING)
+# Shoppinglist backend
+
+This is the backend application for the shoppinglist project. It is developed with Java snd Spring Boot.
 
 # Deployment
 
 Backend application is deployed to Heroku and can be accessed here:
 - https://haagaheliashoppinglist-c2c43878d673.herokuapp.com/
+
+It uses PostgreSQL database which is also in Heroku.
 
 # OpenAPI and Swagger UI
 

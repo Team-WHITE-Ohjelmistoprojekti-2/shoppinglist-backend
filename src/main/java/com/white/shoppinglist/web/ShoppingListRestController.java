@@ -1,23 +1,18 @@
 package com.white.shoppinglist.web;
 import java.util.List;
-import java.util.Optional;
-import com.white.shoppinglist.domain.Product;
-import com.white.shoppinglist.domain.ProductRepository;
+import java.util.stream.Collectors;
+
+
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
-
-//import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactory; //useful later
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping; //coming soon
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,10 +24,45 @@ public class ShoppingListRestController {
     private ShoppingListRepository shoppinglistrepository;
 
     // Get all lists.
+   // Get mapping, retrieves all shopping lists.
     @GetMapping("/shoppinglists")
-    public List<ShoppingList> getAllShoppingLists() {
-        List<ShoppingList> shoppinglists = (List<ShoppingList>) shoppinglistrepository.findAll();
+    public ResponseEntity<List<ShoppingListDTO>> getAllShoppingLists() {
+        List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppinglistrepository.findAll();
 
-        return shoppinglists;
+        // Map shopping lists to DTOs
+        List<ShoppingListDTO> shoppingListDTOs = shoppingLists.stream()
+            .map(shoppingList -> {
+                ShoppingListDTO dto = new ShoppingListDTO();
+                dto.setId(shoppingList.getId());
+                dto.setName(shoppingList.getName());
+                // Set other properties as needed
+                return dto;
+            })
+            .collect(Collectors.toList());
+
+        return new ResponseEntity<>(shoppingListDTOs, HttpStatus.OK);
     }
+
+    // Post mapping, creates a new shopping list.
+    @PostMapping("/shoppinglists")
+    public ResponseEntity<ShoppingListDTO> createShoppingList(@RequestBody ShoppingListDTO shoppingListDTO) {
+        // Validate input data
+        if (shoppingListDTO.getName() == null || shoppingListDTO.getName().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        // Create a new ShoppingList entity
+        ShoppingList shoppingList = new ShoppingList(shoppingListDTO.getName());
+
+        // Save the new shopping list
+        ShoppingList createdShoppingList = shoppinglistrepository.save(shoppingList);
+
+        // Create a DTO for the response
+        ShoppingListDTO createdShoppingListDTO = new ShoppingListDTO();
+        createdShoppingListDTO.setName(createdShoppingList.getName());
+        // Set other properties as needed (not tested if this works yet)
+
+        return new ResponseEntity<>(createdShoppingListDTO, HttpStatus.CREATED);
+    }
+
 }

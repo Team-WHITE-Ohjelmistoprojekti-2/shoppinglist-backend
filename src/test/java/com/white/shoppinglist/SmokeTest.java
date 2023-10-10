@@ -33,7 +33,7 @@ public class SmokeTest {
     }
 
     @Test
-    public void testShoppingListtRestControllerLoads() {
+    public void testShoppingListRestControllerLoads() {
         assertNotNull(shoppingListRestController);
     }
 

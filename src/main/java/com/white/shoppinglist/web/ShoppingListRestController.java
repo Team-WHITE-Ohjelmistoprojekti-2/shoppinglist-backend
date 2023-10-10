@@ -2,7 +2,7 @@ package com.white.shoppinglist.web;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+import com.white.shoppinglist.EntityMapper;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 import org.slf4j.LoggerFactory; //useful later
@@ -22,6 +22,9 @@ public class ShoppingListRestController {
     
     @Autowired
     private ShoppingListRepository shoppinglistrepository;
+
+    @Autowired
+    private EntityMapper mapper;
     
     // Get all lists.
     // Get mapping, retrieves all shopping lists.
@@ -30,14 +33,9 @@ public class ShoppingListRestController {
         List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppinglistrepository.findAll();
 
         // Map shopping lists to DTOs
-        List<ShoppingListDTO> shoppingListDTOs = shoppingLists.stream()
-            .map(shoppingList -> {
-                ShoppingListDTO dto = new ShoppingListDTO();
-                dto.setId(shoppingList.getId());
-                dto.setName(shoppingList.getName());
-                // Set other properties as needed
-                return dto;
-            })
+        List<ShoppingListDTO> shoppingListDTOs = shoppingLists
+            .stream()
+            .map(shoppingList -> mapper.toDto(shoppingList))
             .collect(Collectors.toList());
 
         return new ResponseEntity<>(shoppingListDTOs, HttpStatus.OK);
@@ -57,12 +55,7 @@ public class ShoppingListRestController {
         // Save the new shopping list
         ShoppingList createdShoppingList = shoppinglistrepository.save(shoppingList);
 
-        // Create a DTO for the response
-        ShoppingListDTO createdShoppingListDTO = new ShoppingListDTO(
-            createdShoppingList.getId(),
-            createdShoppingList.getName());
-
-        return new ResponseEntity<>(createdShoppingListDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.toDto(createdShoppingList), HttpStatus.CREATED);
     }
 
 }

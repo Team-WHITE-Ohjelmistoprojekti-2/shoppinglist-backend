@@ -22,9 +22,9 @@ public class ShoppingListRestController {
     
     @Autowired
     private ShoppingListRepository shoppinglistrepository;
-
+    
     // Get all lists.
-   // Get mapping, retrieves all shopping lists.
+    // Get mapping, retrieves all shopping lists.
     @GetMapping("/shoppinglists")
     public ResponseEntity<List<ShoppingListDTO>> getAllShoppingLists() {
         List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppinglistrepository.findAll();
@@ -58,9 +58,9 @@ public class ShoppingListRestController {
         ShoppingList createdShoppingList = shoppinglistrepository.save(shoppingList);
 
         // Create a DTO for the response
-        ShoppingListDTO createdShoppingListDTO = new ShoppingListDTO();
-        createdShoppingListDTO.setName(createdShoppingList.getName());
-        // Set other properties as needed (not tested if this works yet)
+        ShoppingListDTO createdShoppingListDTO = new ShoppingListDTO(
+            createdShoppingList.getId(),
+            createdShoppingList.getName());
 
         return new ResponseEntity<>(createdShoppingListDTO, HttpStatus.CREATED);
     }

@@ -51,6 +51,25 @@ public class ProductRepositoryTests {
         assertTrue(savedProduct.getId() > 0);
         assertNotEquals(savedProduct.getId(), productId);
         assertEquals(savedProduct.getName(), product.getName());
+        assertTrue(productRepository.findById(savedProduct.getId()).isPresent());
     }
 
+    @Test
+    public void testDeleteProduct() {
+        Product savedProduct = productRepository.save(new Product());
+        productRepository.deleteById(savedProduct.getId());
+        Optional<Product> product = productRepository.findById(savedProduct.getId());
+
+        assertTrue(product.isEmpty());
+    }
+
+    @Test
+    public void testUpdateProduct() {
+        Product savedProduct = productRepository.save(new Product());
+        String savedProductName = savedProduct.getName();
+        savedProduct.setName("updated");
+        Product updatedProduct = productRepository.save(savedProduct);
+
+        assertNotEquals(updatedProduct.getName(), savedProductName);
+    }
 }

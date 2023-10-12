@@ -1,5 +1,7 @@
 package com.white.shoppinglist;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,8 +26,7 @@ public class ProductRepositoryTests {
 
     @Test
     public void testFindAllProducts() {
-        Product product = new Product();
-        productRepository.save(product);
+        productRepository.save(new Product());
         List<Product> products = (List<Product>) productRepository.findAll();
 
         assertTrue(products.size() > 0);
@@ -33,11 +34,23 @@ public class ProductRepositoryTests {
 
     @Test
     public void testFindProductById() {
-        Product product = new Product();
-        Product savedProduct = productRepository.save(product);
-        Optional<Product> foundProduct = productRepository.findById(savedProduct.getId());
+        Product savedProduct = productRepository.save(new Product());
+        Optional<Product> product = productRepository.findById(savedProduct.getId());
 
-        assertTrue(foundProduct.isPresent());
-        assertTrue(foundProduct.get().getId() == savedProduct.getId());
+        assertTrue(product.isPresent());
+        assertTrue(product.get().getId() == savedProduct.getId());
     }
+
+    @Test
+    public void testCreateProduct() {
+        Product product = new Product();
+        Long productId = product.getId();
+        product.setName("test product");
+        Product savedProduct = productRepository.save(product);
+
+        assertTrue(savedProduct.getId() > 0);
+        assertNotEquals(savedProduct.getId(), productId);
+        assertEquals(savedProduct.getName(), product.getName());
+    }
+
 }

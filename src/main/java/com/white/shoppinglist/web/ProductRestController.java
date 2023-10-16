@@ -10,6 +10,13 @@ import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +45,22 @@ public class ProductRestController {
     // This gets all products if no query parameters were passed.
     // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
     @GetMapping("/products")
+    @Operation(summary = "Get products")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successful response",
+            content = @Content(
+                mediaType = "application/json",
+                array = @ArraySchema(schema = @Schema(implementation = ProductDTO.class))
+            )
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<List<ProductDTO>> getProducts(
             @RequestParam(value = "shoppinglist", required = false) Long shoppingListId) {
         // shoppinglist id was passed in query parameter
@@ -69,6 +92,19 @@ public class ProductRestController {
 
     // Get product by id.
     @GetMapping("/products/{id}")
+    @Operation(summary = "Get a product by id")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successful response",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class))
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<ProductDTO> getProductById(@PathVariable("id") Long id) {
         Optional<Product> product = productRepository.findById(id);
 
@@ -82,6 +118,19 @@ public class ProductRestController {
     // Post mapping, creates new product.
     // Uses data transfer object to transfer the shoppinglist id of product.
     @PostMapping("/products")
+    @Operation(summary = "Create a new product")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "201",
+            description = "Successful response",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ProductDTO.class))
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO) {
         // Product must belong to shoppinglist
         Long shoppinglistId = productDTO.getShoppinglistId();
@@ -109,6 +158,18 @@ public class ProductRestController {
 
     // Put mapping, updates existing product.
     @PutMapping("/products/{id}")
+    @Operation(summary = "Update an existing product")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "204",
+            description = "Successful response"
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<Void> updateProduct(@RequestBody ProductDTO newProduct, @PathVariable Long id) {
         Product product = productRepository.findById(id).orElse(null);
         if (product == null) {
@@ -127,6 +188,18 @@ public class ProductRestController {
     // delete mapping, deletes product by id returns errorcode if product is not
     // found.
     @DeleteMapping("/product/{id}")
+    @Operation(summary = "Delete a product")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "204",
+            description = "Successful response"
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long productId) {
         Optional<Product> product = productRepository.findById(productId);
 

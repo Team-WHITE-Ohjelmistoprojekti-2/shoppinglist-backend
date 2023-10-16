@@ -1,6 +1,6 @@
 # Shoppinglist backend
 
-This is the backend application for the shoppinglist project. It is developed with Java snd Spring Boot.
+This is the backend application for the shoppinglist project. It is developed with Java and Spring Boot.
 
 # Deployment
 

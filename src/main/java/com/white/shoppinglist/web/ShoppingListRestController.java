@@ -4,14 +4,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.white.shoppinglist.EntityMapper;
-import com.white.shoppinglist.domain.Product;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 import org.slf4j.LoggerFactory; //useful later
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping; //coming soon
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,4 +73,17 @@ public class ShoppingListRestController {
         return new ResponseEntity<>(mapper.toDto(createdShoppingList), HttpStatus.CREATED);
     }
 
+    // Deletes a shopping list and all its products.
+    // JPA takes care of the products so we don't need to delete them explicitly.
+    @DeleteMapping("/shoppinglists/{id}")
+    public ResponseEntity<Void> deleteShoppingList(@PathVariable("id") Long id) {
+        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
+
+        if (shoppingList.isPresent()) {
+            shoppingListRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

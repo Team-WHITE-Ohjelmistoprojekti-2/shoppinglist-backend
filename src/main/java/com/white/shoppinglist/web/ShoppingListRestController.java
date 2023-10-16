@@ -6,6 +6,14 @@ import java.util.stream.Collectors;
 import com.white.shoppinglist.EntityMapper;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import org.slf4j.LoggerFactory; //useful later
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +37,19 @@ public class ShoppingListRestController {
     @Autowired
     private EntityMapper mapper;
     
-    // Get all lists.
     // Get mapping, retrieves all shopping lists.
     @GetMapping("/shoppinglists")
+    @Operation(summary = "Get shoppinglists")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successful response",
+            content = @Content(
+                mediaType = "application/json",
+                array = @ArraySchema(schema = @Schema(implementation = ShoppingListDTO.class))
+            )
+        ),
+    })
     public ResponseEntity<List<ShoppingListDTO>> getAllShoppingLists() {
         List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppingListRepository.findAll();
 
@@ -46,6 +64,19 @@ public class ShoppingListRestController {
 
     // Retrieves shopping list by id.
     @GetMapping("/shoppinglists/{id}")
+    @Operation(summary = "Get a shoppinglist by id")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Successful response",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ShoppingListDTO.class))
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<ShoppingListDTO> getShoppinglistById(@PathVariable("id") Long id) {
         Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
 
@@ -58,6 +89,19 @@ public class ShoppingListRestController {
 
     // Post mapping, creates a new shopping list.
     @PostMapping("/shoppinglists")
+    @Operation(summary = "Create a new shopping list")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "201",
+            description = "Successful response",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ShoppingListDTO.class))
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Bad Request",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<?> createShoppingList(@RequestBody ShoppingListCreateDTO shoppingListCreateDTO) {
         // Validate input data
         if (shoppingListCreateDTO.getName() == null || shoppingListCreateDTO.getName().isEmpty()) {
@@ -76,6 +120,18 @@ public class ShoppingListRestController {
     // Deletes a shopping list and all its products.
     // JPA takes care of the products so we don't need to delete them explicitly.
     @DeleteMapping("/shoppinglists/{id}")
+    @Operation(summary = "Delete a shoppinglist")
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "204",
+            description = "Successful response"
+        ),
+        @ApiResponse(
+            responseCode = "404",
+            description = "Not Found",
+            content = @Content(schema = @Schema(implementation = String.class))
+        ),
+    })
     public ResponseEntity<Void> deleteShoppingList(@PathVariable("id") Long id) {
         Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
 

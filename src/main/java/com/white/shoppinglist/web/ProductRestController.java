@@ -82,18 +82,18 @@ public class ProductRestController {
     // Post mapping, creates new product.
     // Uses data transfer object to transfer the shoppinglist id of product.
     @PostMapping("/products")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO) {
         // Product must belong to shoppinglist
         Long shoppinglistId = productDTO.getShoppinglistId();
         if (shoppinglistId == null) {
-            return new ResponseEntity<ProductDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("shoppinglistId cannot be null", HttpStatus.BAD_REQUEST);
         }
 
         ShoppingList shoppingList = shoppingListRepository
             .findById(shoppinglistId)
             .orElse(null);
         if (shoppingList == null) {
-            return new ResponseEntity<ProductDTO>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Shoppinglist doesn't exist", HttpStatus.BAD_REQUEST);
         }
 
         Product product = new Product(

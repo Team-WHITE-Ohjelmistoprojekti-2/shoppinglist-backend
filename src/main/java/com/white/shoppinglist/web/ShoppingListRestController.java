@@ -58,10 +58,10 @@ public class ShoppingListRestController {
 
     // Post mapping, creates a new shopping list.
     @PostMapping("/shoppinglists")
-    public ResponseEntity<ShoppingListDTO> createShoppingList(@RequestBody ShoppingListDTO shoppingListDTO) {
+    public ResponseEntity<?> createShoppingList(@RequestBody ShoppingListDTO shoppingListDTO) {
         // Validate input data
         if (shoppingListDTO.getName() == null || shoppingListDTO.getName().isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Name cannot be empty", HttpStatus.BAD_REQUEST);
         }
 
         // Create a new ShoppingList entity

@@ -26,6 +26,7 @@ public class Product {
     
     // Add validation to ensure that the value cannot be negative
     @NotNull
+    @PositiveOrZero
     private int quantity = 1; // Default to 1 if not provided
     
     @JsonIgnore

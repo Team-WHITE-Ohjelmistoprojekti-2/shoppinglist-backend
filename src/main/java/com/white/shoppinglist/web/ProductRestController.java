@@ -131,9 +131,9 @@ public class ProductRestController {
             content = @Content(schema = @Schema(implementation = String.class))
         ),
     })
-    public ResponseEntity<?> createProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<?> createProduct(@RequestBody ProductCreateDTO productCreateDTO) {
         // Product must belong to shoppinglist
-        Long shoppinglistId = productDTO.getShoppinglistId();
+        Long shoppinglistId = productCreateDTO.getShoppinglistId();
         if (shoppinglistId == null) {
             return new ResponseEntity<>("shoppinglistId cannot be null", HttpStatus.BAD_REQUEST);
         }
@@ -146,10 +146,10 @@ public class ProductRestController {
         }
 
         Product product = new Product(
-            productDTO.getName(),
-            productDTO.getDetails(),
-            productDTO.getPrice(),
-            productDTO.getQuantity(),
+            productCreateDTO.getName(),
+            productCreateDTO.getDetails(),
+            productCreateDTO.getPrice(),
+            productCreateDTO.getQuantity(),
             shoppingList);
 
         Product createdProduct = productRepository.save(product);
@@ -170,7 +170,7 @@ public class ProductRestController {
             content = @Content(schema = @Schema(implementation = String.class))
         ),
     })
-    public ResponseEntity<Void> updateProduct(@RequestBody ProductDTO newProduct, @PathVariable Long id) {
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductCreateDTO newProduct, @PathVariable Long id) {
         Product product = productRepository.findById(id).orElse(null);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

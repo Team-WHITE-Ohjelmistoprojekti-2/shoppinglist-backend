@@ -10,12 +10,11 @@ public class ProductCreateDTO {
     private Long shoppinglistId;
 
     @PositiveOrZero
-    @NotNull
     private Double price;
 
     @PositiveOrZero
     @NotNull
-    private int quantity;
+    private int quantity = 1;
 
     public ProductCreateDTO(String name, String details, Long shoppinglistId, @PositiveOrZero @NotNull Double price,
             @PositiveOrZero @NotNull int quantity) {

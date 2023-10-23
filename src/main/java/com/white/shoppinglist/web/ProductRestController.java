@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.white.shoppinglist.EntityMapper;
+import com.white.shoppinglist.utility.EntityMapper;
+import com.white.shoppinglist.utility.ProductValidator;
 import com.white.shoppinglist.domain.Product;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ProductRepository;
@@ -35,12 +36,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ProductRestController {
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private ShoppingListRepository shoppingListRepository;
-
     @Autowired
     private EntityMapper mapper;
+    @Autowired
+    private ProductValidator productValidator;
 
     // This gets all products if no query parameters were passed.
     // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
@@ -151,6 +152,7 @@ public class ProductRestController {
             productCreateDTO.getPrice(),
             productCreateDTO.getQuantity(),
             shoppingList);
+        productValidator.ensureValidValues(product);
 
         Product createdProduct = productRepository.save(product);
         return new ResponseEntity<>(mapper.toDto(createdProduct), HttpStatus.CREATED);
@@ -180,6 +182,8 @@ public class ProductRestController {
         product.setQuantity(newProduct.getQuantity());
         product.setPrice(newProduct.getPrice());
         product.setDetails(newProduct.getDetails());
+
+        productValidator.ensureValidValues(product);
         productRepository.save(product);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

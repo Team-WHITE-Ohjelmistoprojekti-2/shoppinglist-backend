@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.white.shoppinglist.EntityMapper;
+import com.white.shoppinglist.utility.EntityMapper;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 

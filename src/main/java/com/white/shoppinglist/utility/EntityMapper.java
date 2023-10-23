@@ -1,4 +1,4 @@
-package com.white.shoppinglist;
+package com.white.shoppinglist.utility;
 
 import org.springframework.stereotype.Component;
 

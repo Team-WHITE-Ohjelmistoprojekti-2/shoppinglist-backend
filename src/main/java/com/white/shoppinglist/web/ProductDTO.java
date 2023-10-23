@@ -11,12 +11,11 @@ public class ProductDTO {
     private Long shoppinglistId;
 
     @PositiveOrZero
-    @NotNull
     private Double price;
 
     @PositiveOrZero
     @NotNull
-    private int quantity;
+    private int quantity = 1;
 
     public ProductDTO(Long id, String name, String details, Double price, int quantity, Long shoppinglistId) {
         this.id = id;

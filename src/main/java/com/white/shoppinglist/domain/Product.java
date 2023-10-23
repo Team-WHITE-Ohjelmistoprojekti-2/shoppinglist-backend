@@ -20,7 +20,6 @@ public class Product {
     private String details;
     
     // some validation to ensure price can be null MIGHT NEED EXTRA WORK the 0.0 gives some failures with null
-    @NotNull 
     @PositiveOrZero
     private Double price = 0.0;
     

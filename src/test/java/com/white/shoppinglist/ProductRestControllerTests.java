@@ -10,23 +10,30 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.white.shoppinglist.domain.Product;
+import com.white.shoppinglist.domain.ProductRepository;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.web.ProductCreateDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProductRestControllerTests {
     private final MockMvc mockMvc;
     private final ShoppingListRepository shoppingListRepository;
+    private final ProductRepository productRepository;
     private final String API_LOCATION = "/api";
 
     @Autowired
     public ProductRestControllerTests(
         MockMvc mockMvc,
-        ShoppingListRepository shoppingListRepository)
+        ShoppingListRepository shoppingListRepository,
+        ProductRepository productRepository)
     {
         this.mockMvc = mockMvc;
         this.shoppingListRepository = shoppingListRepository;
+        this.productRepository = productRepository;
     }
 
     @Test
@@ -43,16 +50,26 @@ public class ProductRestControllerTests {
 
     @Test
     public void testCreateProductReturnsCorrectStatus() throws Exception {
-        List<ShoppingList> shoppingLists = (List<ShoppingList>) shoppingListRepository.findAll();
-        ShoppingList shoppingList = shoppingLists.get(0);
+        ShoppingList shoppingList = shoppingListRepository.save(new ShoppingList());
+        ProductCreateDTO productCreateDTO = new ProductCreateDTO("test", "test", shoppingList.getId(), 10.0, 2);
+        ObjectMapper objectMapper = new ObjectMapper();
 
         mockMvc.perform(MockMvcRequestBuilders.post(API_LOCATION + "/products")
-            .content("{\"name\":\"test product\","
-                + "\"details\": \"test detail\","
-                + "\"price\": 10,"
-                + "\"quantity\": 2,"
-                + "\"shoppinglistId\": " + shoppingList.getId() + "}")
+            .content(objectMapper.writeValueAsString(productCreateDTO))
             .contentType("application/json"))
             .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @Test
+    public void testUpdateProductReturnsCorrectStatus() throws Exception {
+        ShoppingList shoppingList = shoppingListRepository.save(new ShoppingList());
+        Product product = productRepository.save(new Product("test", "test", 5.0, 1, shoppingList));
+        ProductCreateDTO productCreateDTO = new ProductCreateDTO("test", "test", shoppingList.getId(), 10.0, 2);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(MockMvcRequestBuilders.put(API_LOCATION + "/products/" + product.getId())
+            .content(objectMapper.writeValueAsString(productCreateDTO))
+            .contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }

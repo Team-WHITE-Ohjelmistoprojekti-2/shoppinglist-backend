@@ -11,13 +11,13 @@ import com.white.shoppinglist.web.ProductRestController;
 import com.white.shoppinglist.web.ShoppingListRestController;
 
 @SpringBootTest
-public class SmokeTest {
+public class ControllerLoadTests {
     private final ProductRestController productRestController;
     private final ShoppingListRestController shoppingListRestController;
     private final ProductController productController;
 
     @Autowired
-    public SmokeTest(
+    public ControllerLoadTests(
         ProductRestController productRestController,
         ShoppingListRestController shoppingListRestController,
         ProductController productController)

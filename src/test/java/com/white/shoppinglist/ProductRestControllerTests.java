@@ -72,4 +72,13 @@ public class ProductRestControllerTests {
             .contentType("application/json"))
             .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
+
+    @Test
+    public void testDeleteProductReturnsCorrectStatus() throws Exception {
+        ShoppingList shoppingList = shoppingListRepository.save(new ShoppingList());
+        Product product = productRepository.save(new Product("test", "test", 5.0, 1, shoppingList));
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(API_LOCATION + "/product/" + product.getId()))
+            .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }

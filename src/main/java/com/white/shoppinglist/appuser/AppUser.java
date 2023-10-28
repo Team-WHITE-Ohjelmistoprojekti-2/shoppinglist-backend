@@ -68,8 +68,8 @@ public class AppUser implements UserDetails {
 		this.username = username;
 	}
 
-	public void setPassword(String password) {
-		this.passwordHash = password;
+	public void setPassword(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	public String getDescription() {

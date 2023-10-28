@@ -1,4 +1,4 @@
-package com.white.shoppinglist.domain;
+package com.white.shoppinglist.appuser;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usertable")
-public class User {
+public class AppUser {
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -23,10 +23,10 @@ public class User {
 	@Column(name = "description", nullable = false)
 	private String description;
 
-	public User() {
+	public AppUser() {
 	}
 
-	public User(String username, String passwordHash, String description) {
+	public AppUser(String username, String passwordHash, String description) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;

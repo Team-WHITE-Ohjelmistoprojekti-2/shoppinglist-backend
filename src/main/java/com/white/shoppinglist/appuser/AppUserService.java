@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AppUserService implements UserDetailsService {
+    private final static String USER_NOT_FOUND_MSG = "User with username %s not found";
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -23,7 +24,7 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findByUsername(username)
             .orElseThrow(() ->
                 new UsernameNotFoundException(
-                    String.format("User with username &s not found", username)));
+                    String.format(USER_NOT_FOUND_MSG, username)));
     }
 
     // TODO: signup user

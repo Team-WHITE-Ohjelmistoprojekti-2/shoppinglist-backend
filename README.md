@@ -21,3 +21,9 @@ REST API has OpenAPI specification documentation and it can be interactively tes
 Tests are written with JUnit unit testing framework and use a separate H2 in-memory database.
 
 To run tests with H2 database, you need to set Spring profile to test mode with `SPRING_PROFILES_ACTIVE=test` environment variable when running tests. This will then use the `src/test/resources/application.properties` configurations.
+
+# Development mode
+
+There is development mode that you can enable by setting environment variable `SPRING_PROFILES_ACTIVE=development` when running the application. This development mode uses H2 database instead of PostgreSQL.
+
+`application-development.properties` will be used over `application.properties`. These can be found in `src/main/resources`.

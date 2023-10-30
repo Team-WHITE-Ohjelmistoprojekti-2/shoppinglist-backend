@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -20,6 +21,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.appuser.AppUser;
+import com.white.shoppinglist.appuser.AppUserRepository;
+import com.white.shoppinglist.appuser.AppUserRole;
 import com.white.shoppinglist.domain.Product;
 import com.white.shoppinglist.domain.ProductRepository;
 
@@ -33,8 +37,11 @@ public class ShoppinglistApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demodata(ProductRepository productRepository,
-			ShoppingListRepository shoppinglistRepository) {
+	public CommandLineRunner demodata(
+		ProductRepository productRepository,
+		ShoppingListRepository shoppinglistRepository,
+		AppUserRepository appUserRepository,
+		BCryptPasswordEncoder bCryptPasswordEncoder) {
 		return (args) -> {
 			long existingShoppingListCount = shoppinglistRepository.count();
 
@@ -57,6 +64,15 @@ public class ShoppinglistApplication {
 			} else {
 				// There is already data in the database, so do not add demo data
 				System.out.println("There is already data in the database, so demo data will not be added.");
+			}
+
+			// Create test user to test login
+			if (appUserRepository.count() == 0) {
+				AppUser appUser = new AppUser("testuser", "testuser1234!", "", AppUserRole.USER);
+				String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
+        		appUser.setPassword(encodedPassword);
+
+        		appUserRepository.save(appUser);
 			}
 		};
 	}

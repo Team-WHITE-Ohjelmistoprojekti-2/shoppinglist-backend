@@ -38,15 +38,18 @@ public class AppUser implements UserDetails {
 	private AppUserRole appUserRole;
 
 	private Boolean locked = false;
-    private Boolean enabled = false;
+
+	// Enable by default. Can be changed later.
+    private Boolean enabled = true;
 
 	public AppUser() {}
 
-	public AppUser(String username, String passwordHash, String description) {
+	public AppUser(String username, String passwordHash, String description, AppUserRole appUserRole) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.description = description;
+		this.appUserRole = appUserRole;
 	}
 
 	@Override

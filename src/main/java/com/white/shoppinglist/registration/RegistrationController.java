@@ -1,5 +1,4 @@
 package com.white.shoppinglist.registration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -7,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
-
-    @Autowired
     public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }

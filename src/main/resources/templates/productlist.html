@@ -9,6 +9,11 @@
     <div class="container">
 		<div class="col-md-4 text-center">
 			<h1>All Products so far</h1>
+			<h2 class="text-center">Welcome back, <b sec:authentication="name"style="text-transform: capitalize;"> </b> </h2>
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out Test" class="btn btn-sm btn-danger"/>
+			</form>
+
 		</div>
 	
 		<div class="col-md-4" style="padding:40px 0"></div>

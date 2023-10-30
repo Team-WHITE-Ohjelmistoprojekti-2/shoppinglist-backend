@@ -28,4 +28,13 @@ public class AppUserService implements UserDetailsService {
     }
 
     // TODO: signup user
+
+    //work in progress can be fixed if needed
+    public void signUpUser(AppUser newUser) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
+        newUser.setPassword(encryptedPassword);
+        
+        // Save the user to the database
+        appUserRepository.save(newUser);
+    }
 }

@@ -35,7 +35,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Not final
-        RequestMatcher matcherRegistration = new AntPathRequestMatcher("/api/registration/**");
+        RequestMatcher matcherRegistration = new AntPathRequestMatcher("/api/**");
 
         http
             .authenticationProvider(daoAuthenticationProvider())

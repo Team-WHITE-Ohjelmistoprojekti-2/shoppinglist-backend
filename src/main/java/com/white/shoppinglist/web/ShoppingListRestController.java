@@ -1,4 +1,5 @@
 package com.white.shoppinglist.web;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -115,6 +117,28 @@ public class ShoppingListRestController {
         ShoppingList createdShoppingList = shoppingListRepository.save(shoppingList);
 
         return new ResponseEntity<>(mapper.toDto(createdShoppingList), HttpStatus.CREATED);
+    }
+
+    // Updates and existing shopping list with new values.
+    @PutMapping("/shoppinglists/{id}")
+    @Operation(summary = "Update an existing shopping list")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successful response"),
+            @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(schema = @Schema(implementation = String.class)))
+    })
+    public ResponseEntity<Void> updateShoppingList(@RequestBody ShoppingListCreateDTO updatedShoppingList,
+            @PathVariable Long id) {
+        ShoppingList shoppingList = shoppingListRepository.findById(id).orElse(null);
+        if (shoppingList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        shoppingList.setName(updatedShoppingList.getName());
+        shoppingList.setUpdatedAt(LocalDateTime.now());
+
+        shoppingListRepository.save(shoppingList);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // Deletes a shopping list and all its products.

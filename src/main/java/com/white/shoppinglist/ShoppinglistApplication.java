@@ -47,7 +47,7 @@ public class ShoppinglistApplication {
 
 			if (existingShoppingListCount == 0) {
 				// Create demo data only if there are no Shopping Lists in the database yet
-				ShoppingList shoppingList = new ShoppingList("testi lista");
+				ShoppingList shoppingList = new ShoppingList("Jukan lista");
 				shoppinglistRepository.save(shoppingList);
 
 				ShoppingList shoppingList2 = new ShoppingList("testi 3214124124");

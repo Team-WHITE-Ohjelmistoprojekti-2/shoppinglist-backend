@@ -41,18 +41,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Permit authentication endpoints (login and signup)
         RequestMatcher matcherAuth = new AntPathRequestMatcher("/api/auth/**", HttpMethod.POST.toString());
-        // Endpoints not secured for now.
-        RequestMatcher matcherApi = new AntPathRequestMatcher("/api/**");
-        RequestMatcher matcherSwagger1 = new AntPathRequestMatcher("/swagger-ui/**");
-        RequestMatcher matcherSwagger2 = new AntPathRequestMatcher("/swagger-ui.html");
-        RequestMatcher matcherApiDocsConfig = new AntPathRequestMatcher("/api-docs/swagger-config");
-        RequestMatcher matcherApiDocs = new AntPathRequestMatcher("/api-docs");
+        // Permit all endpoints for now.
+        RequestMatcher matcherAll = new AntPathRequestMatcher("/**");
 
         http.csrf((csrf) -> csrf.disable()).cors(withDefaults())
             .sessionManagement(
                 (sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(matcherAuth, matcherApi, matcherSwagger1, matcherSwagger2, matcherApiDocs, matcherApiDocsConfig)
+                .requestMatchers(matcherAuth, matcherAll)
                 .permitAll().anyRequest().authenticated())
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling((exceptionHandling) -> exceptionHandling.authenticationEntryPoint(exceptionHandler));

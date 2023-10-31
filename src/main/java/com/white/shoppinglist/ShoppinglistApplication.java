@@ -1,10 +1,5 @@
 package com.white.shoppinglist;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -12,13 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.white.shoppinglist.domain.ShoppingList;
 import com.white.shoppinglist.domain.ShoppingListRepository;
 import com.white.shoppinglist.appuser.AppUser;
@@ -83,20 +72,6 @@ public class ShoppinglistApplication {
 				appUser.setPassword(encodedPassword);
 
 				appUserRepository.save(appUser);
-			}
-		};
-	}
-
-	// Configures CORS and sets allowed origins, methods, and headers.
-	// Global CORS configuration can be modified here.
-	@Bean
-	public WebMvcConfigurer corsConfiguration() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:5173") // frontendin osoite
-						.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("Content-Type")
-						.allowCredentials(false);
 			}
 		};
 	}

@@ -37,11 +37,9 @@ public class ShoppinglistApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demodata(
-		ProductRepository productRepository,
-		ShoppingListRepository shoppinglistRepository,
-		AppUserRepository appUserRepository,
-		BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public CommandLineRunner demodata(ProductRepository productRepository,
+			ShoppingListRepository shoppinglistRepository, AppUserRepository appUserRepository,
+			BCryptPasswordEncoder bCryptPasswordEncoder) {
 		return (args) -> {
 			long existingShoppingListCount = shoppinglistRepository.count();
 
@@ -50,17 +48,29 @@ public class ShoppinglistApplication {
 				ShoppingList shoppingList = new ShoppingList("Jukan lista");
 				shoppinglistRepository.save(shoppingList);
 
-				ShoppingList shoppingList2 = new ShoppingList("testi 3214124124");
+				ShoppingList shoppingList2 = new ShoppingList("Toinen lista");
 				shoppinglistRepository.save(shoppingList2);
 
-				Product product1 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
+				Product product1 = new Product("Creality Ender-3 v2 - 220*220*250mm",
+						"https://www.3dkauppa.com/13314-creality-ender-3-v2-220-220-250mm.html#attr=3300", 299.00, 1,
+						shoppingList);
 				productRepository.save(product1);
-				Product product2 = new Product("maitojauhe", "Tarvitsen", 2.79, 4, shoppingList);
+				Product product2 = new Product("PrimaSelect CARBON - 1.75mm - 500 g - Army Green",
+						"https://www.3dkauppa.com/13124-primaselect-carbon-1-75mm-500-g-army-green.html?category=263&ppg=12#attr=",
+						39.90, 1, shoppingList);
 				productRepository.save(product2);
 				Product product3 = new Product("Ketsuppi", "Litran purkkeja", 4.29, 6, shoppingList);
 				productRepository.save(product3);
-				Product product4 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
-				productRepository.save(product4);
+
+				Product product4 = new Product("Peruna", "kova peruna", 0.79, 1, shoppingList);
+				productRepository.save(product1);
+				Product product5 = new Product("Maitohauhe", "ei arlaa", 2.79, 4, shoppingList);
+				productRepository.save(product2);
+				Product product6 = new Product("Sinappi", "Litran purkkeja", 4.29, 6, shoppingList);
+				productRepository.save(product3);
+
+				Product product10 = new Product("Leipä", "350g", 3.25, 6, shoppingList2);
+				productRepository.save(product10);
 			} else {
 				// There is already data in the database, so do not add demo data
 				System.out.println("There is already data in the database, so demo data will not be added.");
@@ -70,9 +80,9 @@ public class ShoppinglistApplication {
 			if (appUserRepository.count() == 0) {
 				AppUser appUser = new AppUser("testuser", "testuser1234!", "", AppUserRole.USER);
 				String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
-        		appUser.setPassword(encodedPassword);
+				appUser.setPassword(encodedPassword);
 
-        		appUserRepository.save(appUser);
+				appUserRepository.save(appUser);
 			}
 		};
 	}
@@ -84,10 +94,8 @@ public class ShoppinglistApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:5173") // frontendin osoite
-						.allowedMethods("GET", "POST", "PUT", "DELETE")
-						.allowedHeaders("Content-Type")
+				registry.addMapping("/**").allowedOrigins("http://localhost:5173") // frontendin osoite
+						.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("Content-Type")
 						.allowCredentials(false);
 			}
 		};

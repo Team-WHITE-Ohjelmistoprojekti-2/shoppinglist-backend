@@ -4,12 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class RegistrationRequest {
-    @NotBlank
-    @Size(min = 2, max = 20)
+    @NotBlank(message = "Username cannot be empty")
+    @Size(min = 2, max = 20, message = "Username must have 2 - 20 characters")
     private String username = "";
 
-    @NotBlank
-    @Size(min = 6)
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 6, message = "Password must have at least 6 characters")
     private String password = "";
 
     private String description = "";

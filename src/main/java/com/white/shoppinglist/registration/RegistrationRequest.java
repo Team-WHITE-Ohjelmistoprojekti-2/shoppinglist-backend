@@ -1,13 +1,22 @@
 package com.white.shoppinglist.registration;
 
-public class RegistrationRequest {
-    private final String username;
-    private final String passwordHash;
-    private final String description;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-    public RegistrationRequest(String username, String passwordHash, String description) {
+public class RegistrationRequest {
+    @NotBlank
+    @Size(min = 2, max = 20)
+    private String username = "";
+
+    @NotBlank
+    @Size(min = 6)
+    private String password = "";
+
+    private String description = "";
+
+    public RegistrationRequest(String username, String password, String description) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password = password;
         this.description = description;
     }
 
@@ -15,8 +24,8 @@ public class RegistrationRequest {
         return username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
     public String getDescription() {
@@ -29,14 +38,14 @@ public class RegistrationRequest {
         if (o == null || getClass() != o.getClass()) return false;
         RegistrationRequest that = (RegistrationRequest) o;
         return username.equals(that.username) &&
-                passwordHash.equals(that.passwordHash) &&
+                password.equals(that.password) &&
                 description.equals(that.description);
     }
 
     @Override
     public int hashCode() {
         int result = username.hashCode();
-        result = 31 * result + passwordHash.hashCode();
+        result = 31 * result + password.hashCode();
         result = 31 * result + description.hashCode();
         return result;
     }
@@ -45,7 +54,7 @@ public class RegistrationRequest {
     public String toString() {
         return "RegistrationRequest{" +
                 "username='" + username + '\'' +
-                ", passwordHash='" + passwordHash + '\'' +
+                ", password='" + password + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

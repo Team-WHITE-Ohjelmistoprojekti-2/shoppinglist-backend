@@ -11,7 +11,6 @@ public class RegistrationService {
 
     private final AppUserService appUserService;
 
-    @Autowired
     public RegistrationService(AppUserService appUserService) {
         this.appUserService = appUserService;
     }
@@ -19,7 +18,7 @@ public class RegistrationService {
     public String register(RegistrationRequest request) {
         AppUser newUser = new AppUser(
             request.getUsername(),
-            request.getPasswordHash(),
+            request.getPassword(),
             request.getDescription(),
             AppUserRole.USER
         );

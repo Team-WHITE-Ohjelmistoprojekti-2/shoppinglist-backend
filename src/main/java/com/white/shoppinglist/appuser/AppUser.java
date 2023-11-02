@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "usertable")
+@Table(name = "users")
 public class AppUser implements UserDetails {
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

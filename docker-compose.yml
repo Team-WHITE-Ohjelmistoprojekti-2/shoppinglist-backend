@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:16.0-alpine
+    container_name: shoppinglist-postgres
+    ports:
+      - 12345:5432
+    environment:
+      # Safe to expose because local
+      - POSTGRES_USER=shoppinglist_user
+      - POSTGRES_PASSWORD=shoppinglist_user
+      - POSTGRES_DB=shoppinglistdb
+
+  shoppinglist-backend:
+    build:
+      dockerfile: Dockerfile
+    container_name: shoppinglist-backend
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/shoppinglistdb
+      - SPRING_DATASOURCE_USERNAME=shoppinglist_user
+      - SPRING_DATASOURCE_PASSWORD=shoppinglist_user
+    depends_on:
+      - postgres

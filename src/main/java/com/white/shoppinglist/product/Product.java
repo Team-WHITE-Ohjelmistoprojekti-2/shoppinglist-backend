@@ -1,5 +1,6 @@
-package com.white.shoppinglist.domain;
+package com.white.shoppinglist.product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.white.shoppinglist.shoppinglist.ShoppingList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

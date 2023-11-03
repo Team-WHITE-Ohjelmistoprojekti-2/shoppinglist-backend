@@ -8,13 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.white.shoppinglist.domain.ShoppingList;
-import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.shoppinglist.ShoppingList;
+import com.white.shoppinglist.shoppinglist.ShoppingListRepository;
 import com.white.shoppinglist.appuser.AppUser;
 import com.white.shoppinglist.appuser.AppUserRepository;
 import com.white.shoppinglist.appuser.AppUserRole;
-import com.white.shoppinglist.domain.Product;
-import com.white.shoppinglist.domain.ProductRepository;
+import com.white.shoppinglist.product.Product;
+import com.white.shoppinglist.product.ProductRepository;
 
 @SpringBootApplication
 public class ShoppinglistApplication {

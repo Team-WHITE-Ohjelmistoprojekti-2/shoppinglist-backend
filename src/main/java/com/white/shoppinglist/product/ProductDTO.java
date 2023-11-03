@@ -1,10 +1,11 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.product;
 
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 
-// Product data transfer object used to create and update products.
-public class ProductCreateDTO {
+// Product data transfer object.
+public class ProductDTO {
+    private Long id;
     private String name;
     private String details;
     private Long shoppinglistId;
@@ -16,16 +17,18 @@ public class ProductCreateDTO {
     @NotNull
     private int quantity = 1;
 
-    public ProductCreateDTO(String name, String details, Long shoppinglistId, @PositiveOrZero @NotNull Double price,
-            @PositiveOrZero @NotNull int quantity) {
+    public ProductDTO(Long id, String name, String details, Double price, int quantity, Long shoppinglistId) {
+        this.id = id;
         this.name = name;
         this.details = details;
-        this.shoppinglistId = shoppinglistId;
         this.price = price;
         this.quantity = quantity;
+        this.shoppinglistId = shoppinglistId;
     }
 
-    public ProductCreateDTO() {}
+    public Long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -33,10 +36,6 @@ public class ProductCreateDTO {
 
     public String getDetails() {
         return details;
-    }
-
-    public Long getShoppinglistId() {
-        return shoppinglistId;
     }
 
     public Double getPrice() {
@@ -47,16 +46,20 @@ public class ProductCreateDTO {
         return quantity;
     }
 
+    public Long getShoppinglistId() {
+        return shoppinglistId;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setDetails(String details) {
         this.details = details;
-    }
-
-    public void setShoppinglistId(Long shoppinglistId) {
-        this.shoppinglistId = shoppinglistId;
     }
 
     public void setPrice(Double price) {
@@ -67,9 +70,13 @@ public class ProductCreateDTO {
         this.quantity = quantity;
     }
 
+    public void setShoppinglistId(Long shoppinglistId) {
+        this.shoppinglistId = shoppinglistId;
+    }
+
     @Override
     public String toString() {
-        return "ProductCreateDTO [name=" + name + ", details=" + details + ", shoppinglistId=" + shoppinglistId
-                + ", price=" + price + ", quantity=" + quantity + "]";
+        return "ProductDTO [id=" + id + ", name=" + name + ", details=" + details + ", price=" + price + ", quantity="
+                + quantity + ", shoppinglistId=" + shoppinglistId + "]";
     }
 }

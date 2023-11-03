@@ -1,4 +1,4 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.shoppinglist;
 
 // Shoppinglist data transfer object used to create shoppinglists.
 public class ShoppingListCreateDTO {

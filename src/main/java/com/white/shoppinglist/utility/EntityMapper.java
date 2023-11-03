@@ -2,10 +2,10 @@ package com.white.shoppinglist.utility;
 
 import org.springframework.stereotype.Component;
 
-import com.white.shoppinglist.domain.Product;
-import com.white.shoppinglist.domain.ShoppingList;
-import com.white.shoppinglist.web.ProductDTO;
-import com.white.shoppinglist.web.ShoppingListDTO;
+import com.white.shoppinglist.product.Product;
+import com.white.shoppinglist.shoppinglist.ShoppingList;
+import com.white.shoppinglist.product.ProductDTO;
+import com.white.shoppinglist.shoppinglist.ShoppingListDTO;
 
 @Component
 public class EntityMapper {

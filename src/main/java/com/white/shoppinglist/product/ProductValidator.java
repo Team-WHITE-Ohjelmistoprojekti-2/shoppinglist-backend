@@ -1,7 +1,7 @@
-package com.white.shoppinglist.utility;
+package com.white.shoppinglist.product;
 
 import org.springframework.stereotype.Component;
-import com.white.shoppinglist.domain.Product;
+import com.white.shoppinglist.product.Product;
 
 @Component
 public class ProductValidator {

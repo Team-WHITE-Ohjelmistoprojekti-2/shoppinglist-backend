@@ -1,4 +1,4 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.product;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.white.shoppinglist.domain.Product;
-import com.white.shoppinglist.domain.ProductRepository;
+import com.white.shoppinglist.product.Product;
+import com.white.shoppinglist.product.ProductRepository;
 
 @Controller
 public class ProductController {

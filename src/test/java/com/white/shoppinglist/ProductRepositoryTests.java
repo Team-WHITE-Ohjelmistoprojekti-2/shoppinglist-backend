@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.white.shoppinglist.domain.ProductRepository;
-import com.white.shoppinglist.domain.Product;
+import com.white.shoppinglist.product.ProductRepository;
+import com.white.shoppinglist.product.Product;
 
 @SpringBootTest
 public class ProductRepositoryTests {

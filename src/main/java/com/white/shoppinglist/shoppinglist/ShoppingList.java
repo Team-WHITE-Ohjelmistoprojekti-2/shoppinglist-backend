@@ -1,4 +1,4 @@
-package com.white.shoppinglist.domain;
+package com.white.shoppinglist.shoppinglist;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +12,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.white.shoppinglist.product.Product;
 
 @Entity
 public class ShoppingList {

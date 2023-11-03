@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.white.shoppinglist.web.ProductController;
-import com.white.shoppinglist.web.ProductRestController;
-import com.white.shoppinglist.web.ShoppingListRestController;
+import com.white.shoppinglist.product.ProductController;
+import com.white.shoppinglist.product.ProductRestController;
+import com.white.shoppinglist.shoppinglist.ShoppingListRestController;
 
 @SpringBootTest
 public class ControllerLoadTests {

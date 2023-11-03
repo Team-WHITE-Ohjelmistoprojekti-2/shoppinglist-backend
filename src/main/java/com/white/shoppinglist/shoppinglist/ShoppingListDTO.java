@@ -1,4 +1,4 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.shoppinglist;
 
 import java.time.LocalDateTime;
 

@@ -1,15 +1,15 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.product;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.white.shoppinglist.utility.EntityMapper;
-import com.white.shoppinglist.utility.ProductValidator;
-import com.white.shoppinglist.domain.Product;
-import com.white.shoppinglist.domain.ShoppingList;
-import com.white.shoppinglist.domain.ProductRepository;
-import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.product.ProductValidator;
+import com.white.shoppinglist.product.Product;
+import com.white.shoppinglist.shoppinglist.ShoppingList;
+import com.white.shoppinglist.product.ProductRepository;
+import com.white.shoppinglist.shoppinglist.ShoppingListRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

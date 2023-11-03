@@ -1,12 +1,12 @@
-package com.white.shoppinglist.web;
+package com.white.shoppinglist.shoppinglist;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.white.shoppinglist.utility.EntityMapper;
-import com.white.shoppinglist.domain.ShoppingList;
-import com.white.shoppinglist.domain.ShoppingListRepository;
+import com.white.shoppinglist.shoppinglist.ShoppingList;
+import com.white.shoppinglist.shoppinglist.ShoppingListRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

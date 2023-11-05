@@ -27,3 +27,22 @@ To run tests with H2 database, you need to set Spring profile to test mode with 
 There is development mode that you can enable by setting environment variable `SPRING_PROFILES_ACTIVE=development` when running the application. This development mode uses H2 database instead of PostgreSQL.
 
 `application-development.properties` will be used over `application.properties`. These can be found in `src/main/resources`.
+
+# How to run with Docker
+
+With Docker you can run the backend application and PostgreSQL locally using Docker Compose. You don't need to install PostgreSQL on your own machine.
+
+Run the app and database
+```bash
+cd shoppinglist-backend
+```
+```bash
+docker compose up -d
+```
+
+The application will be available at localhost:8080
+
+Stop and remove containers
+```bash
+docker compose down
+```

@@ -1,4 +1,4 @@
-package com.white.shoppinglist.appuser;
+package com.white.shoppinglist.registration;
 
 public class LoginRequest {
     private String username;

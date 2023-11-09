@@ -50,11 +50,7 @@ public class AppUser implements UserDetails {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
-		if (description == null) {
-			this.description = "";
-		} else {
-			this.description = description;
-		}
+		this.description = (description == null) ? "" : description;
 		this.appUserRole = appUserRole;
 	}
 

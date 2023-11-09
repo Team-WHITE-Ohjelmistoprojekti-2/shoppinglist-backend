@@ -42,13 +42,19 @@ public class AppUser implements UserDetails {
 	// Enable by default. Can be changed later.
     private Boolean enabled = true;
 
-	public AppUser() {}
+	public AppUser() {
+		this.description = "";
+	}
 
 	public AppUser(String username, String passwordHash, String description, AppUserRole appUserRole) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
-		this.description = description;
+		if (description == null) {
+			this.description = "";
+		} else {
+			this.description = description;
+		}
 		this.appUserRole = appUserRole;
 	}
 

@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtService {
 	// 1 hour in ms. Should be shorter in production.
 	static final long EXPIRATIONTIME = 3600000;
-	static final String PREFIX = "Bearer";
+	static final String PREFIX = "Bearer ";
 
 	// Generate secret key. Only for demonstration purposes.
 	// In production, you should read it from the application

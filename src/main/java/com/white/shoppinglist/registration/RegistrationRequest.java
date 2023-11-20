@@ -4,7 +4,19 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class RegistrationRequest {
     @NotBlank(message = "Username must contain at least one non-whitespace character")
     @NotEmpty(message = "Username cannot be empty")
@@ -19,49 +31,4 @@ public class RegistrationRequest {
     private String password = "";
 
     private String description = "";
-
-    public RegistrationRequest(String username, String password, String description) {
-        this.username = username;
-        this.password = password;
-        this.description = description;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RegistrationRequest that = (RegistrationRequest) o;
-        return username.equals(that.username) &&
-                password.equals(that.password) &&
-                description.equals(that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + description.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "RegistrationRequest{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

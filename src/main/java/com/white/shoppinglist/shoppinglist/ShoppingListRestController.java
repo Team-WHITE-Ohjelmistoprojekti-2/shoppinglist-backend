@@ -15,8 +15,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import org.slf4j.LoggerFactory; //useful later
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +37,7 @@ public class ShoppingListRestController {
     @Autowired
     private EntityMapper mapper;
     
-    // Get mapping, retrieves all shopping lists.
+    // Retrieves all shopping lists.
     @GetMapping("/shoppinglists")
     @Operation(summary = "Get shoppinglists")
     @ApiResponses(value = {
@@ -89,7 +87,7 @@ public class ShoppingListRestController {
         }
     }
 
-    // Post mapping, creates a new shopping list.
+    // Creates a new shopping list.
     @PostMapping("/shoppinglists")
     @Operation(summary = "Create a new shopping list")
     @ApiResponses(value = {
@@ -119,7 +117,7 @@ public class ShoppingListRestController {
         return new ResponseEntity<>(mapper.toDto(createdShoppingList), HttpStatus.CREATED);
     }
 
-    // Updates and existing shopping list with new values.
+    // Updates an existing shopping list with new values.
     @PutMapping("/shoppinglists/{id}")
     @Operation(summary = "Update an existing shopping list")
     @ApiResponses(value = {

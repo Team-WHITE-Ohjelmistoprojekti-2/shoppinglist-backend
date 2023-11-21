@@ -44,7 +44,7 @@ public class ProductRestController {
     private ProductValidator productValidator;
 
     // This gets all products if no query parameters were passed.
-    // Gets products for a shoppinglist if shoppinglist id was passed in query parameter.
+    // If shoppinglist id was passed in query parameter, gets that shoppinglist's products.
     @GetMapping("/products")
     @Operation(summary = "Get products")
     @ApiResponses(value = {

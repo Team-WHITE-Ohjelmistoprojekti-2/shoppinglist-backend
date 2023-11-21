@@ -13,7 +13,6 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
     public AppUserService(AppUserRepository appUserRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.appUserRepository = appUserRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -27,9 +26,7 @@ public class AppUserService implements UserDetailsService {
                     String.format(USER_NOT_FOUND_MSG, username)));
     }
 
-    // TODO: signup user
-
-    //work in progress can be fixed if needed
+    // Signs up a new user
     public void signUpUser(AppUser newUser) {
         String encryptedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
         newUser.setPassword(encryptedPassword);

@@ -3,7 +3,14 @@ package com.white.shoppinglist.product;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;;
+
 // Product data transfer object.
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductDTO {
     private Long id;
     private String name;
@@ -24,59 +31,5 @@ public class ProductDTO {
         this.price = price;
         this.quantity = quantity;
         this.shoppinglistId = shoppinglistId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public Long getShoppinglistId() {
-        return shoppinglistId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setShoppinglistId(Long shoppinglistId) {
-        this.shoppinglistId = shoppinglistId;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductDTO [id=" + id + ", name=" + name + ", details=" + details + ", price=" + price + ", quantity="
-                + quantity + ", shoppinglistId=" + shoppinglistId + "]";
     }
 }

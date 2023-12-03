@@ -18,13 +18,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class AppUser implements UserDetails {
+	
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
 	// Username with unique constraint
-	@Column(name = "username", nullable = false, unique = true)
-	private String username;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
 
 	@Column(name = "password", nullable = false)
 	private String passwordHash;
@@ -40,26 +41,37 @@ public class AppUser implements UserDetails {
 	private Boolean locked = false;
 
 	// Enable by default. Can be changed later.
-    private Boolean enabled = true;
+	private Boolean enabled = true;
 
 	public AppUser() {
 		this.description = "";
 	}
 
-	public AppUser(String username, String passwordHash, String description, AppUserRole appUserRole) {
-		super();
-		this.username = username;
-		this.passwordHash = passwordHash;
-		this.description = (description == null) ? "" : description;
-		this.appUserRole = appUserRole;
+    public AppUser(String username, String passwordHash, String description, AppUserRole appUserRole) {
+        super();
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.description = (description == null) ? "" : description;
+        this.appUserRole = appUserRole;
+    }
+
+	public AppUserRole getAppUserRole() {
+		return appUserRole;
 	}
 
-	@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority =
-                new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+	public boolean isLocked() {
+        return locked;
     }
+
+	public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
+		return Collections.singletonList(authority);
+	}
 
 	public Long getId() {
 		return id;
@@ -84,34 +96,34 @@ public class AppUser implements UserDetails {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-    
-	@Override
-    public String getPassword() {
-        return passwordHash;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
 	@Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	public String getPassword() {
+		return passwordHash;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return !locked;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
 }
